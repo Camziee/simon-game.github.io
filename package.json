@@ -1,0 +1,23 @@
+{
+  "name": "simon-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "tsc --outFile ./dist/index.js ./src/index.ts -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Camziee/simon-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Camziee/simon-game/issues"
+  },
+  "homepage": "https://github.com/Camziee/simon-game#readme",
+  "devDependencies": {
+    "typescript": "^3.9.7"
+  }
+}

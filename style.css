@@ -4,6 +4,10 @@ body, html {
     height: 100%;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 /* Body Wrapper */
 .body-wrapper {
     display: flex; /*position*/
@@ -14,11 +18,11 @@ body, html {
 
 /* Header */
 .bar-header {
-    height: 400px; /*position*/
+    flex-basis: 100px; /*position*/
 
     background-color: rgb(36, 36, 36); /*style*/
 }
-.bar-header_title {
+.bar-header__title {
     text-align: center; /* position */
     margin-top: 10px;
     transform: translateY(50%);
@@ -27,6 +31,7 @@ body, html {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: white;
 }
+
 
 
 /* Main */
@@ -40,56 +45,55 @@ body, html {
 
 
 
-
-
 /* Game Wraper */
 .game-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     flex: 1; /* position */
  
-    background-color: rgb(255, 59, 59); /*style*/
+    background-color: rgb(179, 179, 179); /*style*/
 }
+
 /* Button Wrapper */
 .button-wrapper {
-    width: 300px;
-    height: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    height: 60%;
 
-    background-color: darkgreen;
+    background-color: rgb(59, 59, 59);
 }
+
 /* Game Buttons */
-.game_button {
-    width: 30px; /* position */
-    height: 30px;
+.game-button {
+    width: 220px; /* position */
+    height: 180px;
+    border-radius: 30px;
+    cursor: pointer;
 }
-.game_button-pink {
+.game-button_pink {
     background-color: rgb(255, 174, 201); /*style*/
 }
-.game_button-blue {
+.game-button_blue {
     background-color: rgb(153, 217, 234); /*style*/
 }
-.game_button-yellow {
+.game-button_yellow {
     background-color: rgb(255, 255, 128); /*style*/
 }
-.game_button-green {
+.game-button_green {
     background-color: rgb(128, 255, 128);
 }
 
 
 
 
-/* Div Ranking */
-.ranking {
-    width: 30%; /*position*/
-
-    background-color: rgb(54, 54, 54); /*style*/
-}
-
-
-
-
-
 /* Footer */
 .bar-footer {
-    height: 250px; /*position*/ 
+    flex-basis: 60px; /*position*/
 
     background-color: rgb(36, 36, 36); /*style*/
 }
