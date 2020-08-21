@@ -1,62 +1,60 @@
 const winningRound = 10;
-
-
-
 class GameApp {
-    public gameRunning: boolean;
+  public gameRunning: boolean;
     
-    gameState: boolean; /* check with Adriano gameState <> gameRunning */
-    constructor() {
+  gameState: boolean;
+  constructor() {
     
-    }
-
-    /* Responsibility:
-       - C
-    */
+  }
 }
 
-
-
- class GameController {
-    gameRunning: boolean; /* check with Adriano gameState <> gameRunning */
-
-
-    public gameSequence: string[];
-    public playerSequence: string[];
-    
-    constructor() {
-
-    }
-
-    /* Responsibility:
-       - Random buttom
-       - Add random buttom to gameSequence
-       - Get playerButton
-       - Add playerButtom to playerSequence
-       - Compare gameSquence == playerSequence
-       - Set loseScreen = false
-       -
-       - Call Rounds
-    */
-
- }
-
+/*let gameController = new GameController();
+ /* instanciar GameController para já começar a rodar quando carregar a página */ /* TO DO */
  
 
+class GameButton {
+  public active: boolean = false;
+  public element: HTMLElement;
 
- class GameButton {
-    public buttonState: boolean;
+  constructor(color: string) {
+    this.element = document.querySelector(`.game-button_${color}`);
+  }    /* metodo turn on/off class*/ /* TO DO */
+      /* Responsibility:
+       - Add class game-button--active to div.game-button*/
+}
 
-    constructor() {
+ class GameController {
+  gameRunning: boolean = false;
 
-    }
+  public gameButtons: GameButton[]; 
+  public gameSequence: GameButton[];
+  public playerSequence: GameButton[];
+  public colors: string[];
+  
+  
+  constructor() {
+      this.gameRunning = true;
+      this.colors = ["pink", "blue", "yellow", "green"];
 
-    /* Responsibility:
-       - Add class game-button--active to div.game-button
-    */
- }
-
-
+      for (let i = 0; i < 4; i++ ) {
+        let currentColor = new GameButton(this.colors[i]);
+        this.gameButtons.push(currentColor);
+        console.log(currentColor);
+      }
+      
+      
+  }
+  /* Responsibility:
+     - Random buttom
+     - Add random buttom to gameSequence
+     - Get playerButton
+     - Add playerButtom to playerSequence
+     - Compare gameSquence == playerSequence
+     - Set loseScreen = true
+     -
+     - Call Rounds
+  */
+}
 
   class Rounds {
 

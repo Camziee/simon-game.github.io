@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Camziee/simon-game#readme",
   "devDependencies": {
+    "@tsconfig/node12": "^1.0.7",
     "typescript": "^3.9.7"
   }
 }
