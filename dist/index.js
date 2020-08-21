@@ -4,24 +4,29 @@ var GameApp = /** @class */ (function () {
     }
     return GameApp;
 }());
-/*let gameController = new GameController();
- /* instanciar GameController para já começar a rodar quando carregar a página */ /* TO DO */
 var GameButton = /** @class */ (function () {
     function GameButton(color) {
         this.active = false;
         this.element = document.querySelector(".game-button_" + color);
-    } /* metodo turn on/off class*/ /* TO DO */
+        this.element.addEventListener('mousedown', this.changeClass.bind(this));
+        //bind = referenciar o this à classe, mas e se fosse outro cenário?
+        //o this depois do bind é uma variável?
+    }
+    GameButton.prototype.changeClass = function () {
+        this.element.classList.add("game-button--activated");
+    };
     return GameButton;
 }());
 var GameController = /** @class */ (function () {
     function GameController() {
         this.gameRunning = false;
+        this.gameButtons = [];
         this.gameRunning = true;
         this.colors = ["pink", "blue", "yellow", "green"];
-        for (var i = 0; i < 4; i++) {
-            var currentColor = new GameButton(this.colors[i]);
+        for (var _i = 0, _a = this.colors; _i < _a.length; _i++) {
+            var x = _a[_i];
+            var currentColor = new GameButton(x);
             this.gameButtons.push(currentColor);
-            console.log(currentColor);
         }
     }
     return GameController;
@@ -41,3 +46,4 @@ var LoseScreen = /** @class */ (function () {
     }
     return LoseScreen;
 }());
+var gameController = new GameController();
