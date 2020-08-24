@@ -1,4 +1,5 @@
-const winningRound = 10;
+const WINNIN_GROUND = 10;
+const ACTIVATION_DELAY = 700;
 
 class GameApp {
   public gameRunning: boolean;
@@ -15,18 +16,26 @@ class GameButton {
 
   constructor(color: string) {
     this.element = document.querySelector(`.game-button_${color}`);
-    this.element.addEventListener('mousedown', this.changeClass.bind(this));
-    //bind = referenciar o this à classe, mas e se fosse outro cenário?
-    //o this depois do bind é uma variável?
+    this.element.addEventListener('mousedown', this.turnOnThenOff.bind(this));
   }
-
-  changeClass() {
+  
+  turnOn() {
     this.element.classList.add("game-button--activated");
   }
 
-  // metodo turn on/off class TO DO
-  // Responsibility:
-  // - Add class game-button--active to div.game-button
+  turnOff() {
+    this.element.classList.remove("game-button--activated");
+  }
+
+  turnOnThenOff() {
+    this.turnOn();
+    setTimeout(() => {
+      this.turnOff();
+    }, ACTIVATION_DELAY)
+    return function(){
+    };
+  }
+
 }
 
 class GameController {
@@ -44,11 +53,15 @@ class GameController {
     this.colors = ["pink", "blue", "yellow", "green"];
 
     for (let x of this.colors) {
-      let currentColor = new GameButton(x);
+      const currentColor = new GameButton(x);
       this.gameButtons.push(currentColor);
     }
       
   }
+
+  // método para pegar um index aleatorio do gameButtons e adicionar no gameSequence TO DO
+  // método para executar o turnOnThenOff de todos os buttons do gameSequence (utilizar o ACTIVATION_DELAY)
+
   // Responsibility:
   // - Random buttom
   // - Add random buttom to gameSequence
@@ -100,4 +113,4 @@ class LoseScreen {
   // - Set gameRunning = true/false;
 }
 
-let gameController = new GameController();
+new GameController();
