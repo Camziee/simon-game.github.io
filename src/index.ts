@@ -1,4 +1,4 @@
-const WINNIN_GROUND = 10;
+const WINNING_ROUND = 10;
 const ACTIVATION_DELAY = 700;
 
 class GameApp {
@@ -48,18 +48,44 @@ class GameController {
   
   
   constructor() {
-    this.gameButtons = []; 
     this.gameRunning = true;
-    this.colors = ["pink", "blue", "yellow", "green"];
+    this.gameButtons = []; 
+    this.gameSequence = [];
+    this.colors = ["pink", "blue", "yellow", "green"];     
 
-    for (let x of this.colors) {
-      const currentColor = new GameButton(x);
+    for (let color of this.colors) {
+      const currentColor = new GameButton(color);
       this.gameButtons.push(currentColor);
     }
+
+    this.startGameSequence();
+    console.log(this.gameSequence);
       
   }
 
-  // método para pegar um index aleatorio do gameButtons e adicionar no gameSequence TO DO
+  getRandomButton() {
+    let randomButton: GameButton;
+    randomButton = this.gameButtons[Math.floor(Math.random() *  this.gameButtons.length)];
+    return randomButton;
+  }
+
+  startGameSequence() {
+    for (let i = 0; i < WINNING_ROUND; i++) {
+      this.gameSequence.push(this.getRandomButton());
+    }
+    this.playGameSequence();
+  }
+
+  playGameSequence() {
+    this.gameSequence.forEach(function (value) {
+      value.turnOnThenOff();
+      setTimeout(() => function (){
+        console.log(":(");
+      }, ACTIVATION_DELAY)
+    })
+  }
+
+  // método para pegar um index aleatorio do gameButtons e adicionar no gameSequence OK
   // método para executar o turnOnThenOff de todos os buttons do gameSequence (utilizar o ACTIVATION_DELAY)
 
   // Responsibility:
@@ -81,7 +107,7 @@ class Rounds {
   }
   // Responsibility:
   // - Set gameRunning = true/false
-  // - Verify if rounds >= winningRound
+  // - Verify if number if items in the gameSequence array >= WINNING_ROUNDS
   // - Set winScreen = true
 }
 
