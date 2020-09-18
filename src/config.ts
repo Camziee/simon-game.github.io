@@ -1,0 +1,1 @@
+export const BUTTON_ACTIVATION_DELAY = 700;
