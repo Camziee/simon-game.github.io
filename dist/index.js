@@ -1,15 +1,16 @@
 var WINNING_ROUND = 10;
-var ACTIVATION_DELAY = 700;
+var BUTTON_ACTIVATION_DELAY = 700;
 var GameApp = /** @class */ (function () {
     function GameApp() {
     }
     return GameApp;
 }());
 var GameButton = /** @class */ (function () {
-    function GameButton(color) {
+    function GameButton(color, callback) {
         this.active = false;
         this.element = document.querySelector(".game-button_" + color);
-        this.element.addEventListener('mousedown', this.turnOnThenOff.bind(this));
+        this.element.addEventListener('mouseup', this.click.bind(this));
+        this.clickedCallback = callback;
     }
     GameButton.prototype.turnOn = function () {
         this.element.classList.add("game-button--activated");
@@ -22,9 +23,10 @@ var GameButton = /** @class */ (function () {
         this.turnOn();
         setTimeout(function () {
             _this.turnOff();
-        }, ACTIVATION_DELAY);
-        return function () {
-        };
+        }, BUTTON_ACTIVATION_DELAY);
+    };
+    GameButton.prototype.click = function () {
+        this.clickedCallback(this);
     };
     return GameButton;
 }());
@@ -34,32 +36,54 @@ var GameController = /** @class */ (function () {
         this.gameRunning = true;
         this.gameButtons = [];
         this.gameSequence = [];
+        this.playerSequence = [];
         this.colors = ["pink", "blue", "yellow", "green"];
         for (var _i = 0, _a = this.colors; _i < _a.length; _i++) {
             var color = _a[_i];
-            var currentColor = new GameButton(color);
+            var currentColor = new GameButton(color, this.playerClickedGameButton.bind(this));
             this.gameButtons.push(currentColor);
         }
-        this.startGameSequence();
-        console.log(this.gameSequence);
+        this.addGameSequence();
     }
-    GameController.prototype.getRandomButton = function () {
-        var randomButton;
-        randomButton = this.gameButtons[Math.floor(Math.random() * this.gameButtons.length)];
-        return randomButton;
-    };
-    GameController.prototype.startGameSequence = function () {
-        for (var i = 0; i < WINNING_ROUND; i++) {
-            this.gameSequence.push(this.getRandomButton());
+    GameController.prototype.playerClickedGameButton = function (gameButton) {
+        this.playerSequence.push(gameButton);
+        var isEqual = true;
+        console.log(this.playerSequence);
+        for (var index = 0; index < this.playerSequence.length; index++) {
+            if (this.gameSequence[index] !== this.playerSequence[index]) {
+                isEqual = false;
+                break;
+            }
         }
+        if (!isEqual) {
+            alert("Wrong button, you lost :(");
+            this.gameSequence = [];
+            this.playerSequence = [];
+            this.addGameSequence();
+            return;
+        }
+        var roundNotFinished = this.playerSequence.length < this.gameSequence.length;
+        if (roundNotFinished) {
+            console.log("NotFinished");
+            return;
+        }
+        this.playerSequence = [];
+        this.addGameSequence();
+        console.log("Finished");
+    };
+    GameController.prototype.getRandomButton = function () {
+        return this.gameButtons[Math.floor(Math.random() * this.gameButtons.length)];
+    };
+    GameController.prototype.addGameSequence = function () {
+        this.gameSequence.push(this.getRandomButton());
         this.playGameSequence();
+        console.log(this.gameSequence);
     };
     GameController.prototype.playGameSequence = function () {
-        this.gameSequence.forEach(function (value) {
-            value.turnOnThenOff();
-            setTimeout(function () { return function () {
-                console.log(":(");
-            }; }, ACTIVATION_DELAY);
+        this.gameSequence.forEach(function (gameButton, key) {
+            setTimeout(function () {
+                gameButton.turnOnThenOff();
+            }, (BUTTON_ACTIVATION_DELAY * key) + 2000);
         });
     };
     return GameController;

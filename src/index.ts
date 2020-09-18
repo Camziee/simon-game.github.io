@@ -1,5 +1,5 @@
 const WINNING_ROUND = 10;
-const ACTIVATION_DELAY = 700;
+const BUTTON_ACTIVATION_DELAY = 700;
 
 class GameApp {
   public gameRunning: boolean;
@@ -13,10 +13,12 @@ class GameApp {
 class GameButton {
   public active: boolean = false;
   public element: HTMLElement;
+  public clickedCallback: Function;
 
-  constructor(color: string) {
+  constructor(color: string, callback: Function) {
     this.element = document.querySelector(`.game-button_${color}`);
-    this.element.addEventListener('mousedown', this.turnOnThenOff.bind(this));
+    this.element.addEventListener('mouseup', this.click.bind(this));
+    this.clickedCallback = callback;
   }
   
   turnOn() {
@@ -31,9 +33,11 @@ class GameButton {
     this.turnOn();
     setTimeout(() => {
       this.turnOff();
-    }, ACTIVATION_DELAY)
-    return function(){
-    };
+    }, BUTTON_ACTIVATION_DELAY);
+  }
+
+  click() {
+    this.clickedCallback(this);
   }
 
 }
@@ -51,42 +55,74 @@ class GameController {
     this.gameRunning = true;
     this.gameButtons = []; 
     this.gameSequence = [];
-    this.colors = ["pink", "blue", "yellow", "green"];     
+    this.playerSequence = [];
+    this.colors = ["pink", "blue", "yellow", "green"];    
 
     for (let color of this.colors) {
-      const currentColor = new GameButton(color);
+      const currentColor = new GameButton(color, this.playerClickedGameButton.bind(this));
       this.gameButtons.push(currentColor);
     }
 
-    this.startGameSequence();
-    console.log(this.gameSequence);
-      
+    this.addGameSequence();
+
+  }
+
+
+  playerClickedGameButton(gameButton: GameButton) {
+    this.playerSequence.push(gameButton);
+    var isEqual = true;
+
+    console.log(this.playerSequence);
+    
+    for (let index = 0; index < this.playerSequence.length; index++) {
+      if (this.gameSequence[index] !== this.playerSequence[index]) {
+        isEqual = false;
+        break;
+      }
+    }
+
+    if(!isEqual) {
+      alert("Wrong button, you lost :(");
+      this.gameSequence = [];
+      this.playerSequence = [];
+      this.addGameSequence();
+      return;      
+    }
+
+    var roundNotFinished = this.playerSequence.length < this.gameSequence.length;
+
+    if (roundNotFinished) {
+      console.log("NotFinished");
+      return;
+    }
+
+    this.playerSequence = [];
+    this.addGameSequence();
+    
+    console.log("Finished");
+    
   }
 
   getRandomButton() {
-    let randomButton: GameButton;
-    randomButton = this.gameButtons[Math.floor(Math.random() *  this.gameButtons.length)];
-    return randomButton;
+    return this.gameButtons[Math.floor(Math.random() *  this.gameButtons.length)];
   }
 
-  startGameSequence() {
-    for (let i = 0; i < WINNING_ROUND; i++) {
-      this.gameSequence.push(this.getRandomButton());
-    }
+  addGameSequence() {
+    this.gameSequence.push(this.getRandomButton());
+
     this.playGameSequence();
+
+    
+    console.log(this.gameSequence);
   }
 
   playGameSequence() {
-    this.gameSequence.forEach(function (value) {
-      value.turnOnThenOff();
-      setTimeout(() => function (){
-        console.log(":(");
-      }, ACTIVATION_DELAY)
+    this.gameSequence.forEach(function (gameButton, key) {
+      setTimeout(() => {
+        gameButton.turnOnThenOff();
+      }, (BUTTON_ACTIVATION_DELAY * key) + 2000);
     })
   }
-
-  // método para pegar um index aleatorio do gameButtons e adicionar no gameSequence OK
-  // método para executar o turnOnThenOff de todos os buttons do gameSequence (utilizar o ACTIVATION_DELAY)
 
   // Responsibility:
   // - Random buttom
