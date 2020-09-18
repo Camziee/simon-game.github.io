@@ -1,4 +1,3 @@
-const WINNING_ROUND = 10;
 const BUTTON_ACTIVATION_DELAY = 700;
 
 class GameApp {
@@ -49,15 +48,22 @@ class GameController {
   public gameSequence: GameButton[];
   public playerSequence: GameButton[];
   public colors: string[];
-  
+  public $modalPlayAgain: HTMLElement;
+  public $roundsNumber: HTMLElement;
+  public rounds: number;
   
   constructor() {
     this.gameRunning = true;
     this.gameButtons = []; 
     this.gameSequence = [];
     this.playerSequence = [];
-    this.colors = ["pink", "blue", "yellow", "green"];    
+    this.colors = ["pink", "blue", "yellow", "green"];
+    this.rounds = 0;
 
+    this.$roundsNumber = document.querySelector(".rounds-number");
+    this.$modalPlayAgain = document.querySelector(".btn_play-again");
+    this.$modalPlayAgain.onclick = this.playAgain.bind(this);
+    
     for (let color of this.colors) {
       const currentColor = new GameButton(color, this.playerClickedGameButton.bind(this));
       this.gameButtons.push(currentColor);
@@ -66,7 +72,6 @@ class GameController {
     this.addGameSequence();
 
   }
-
 
   playerClickedGameButton(gameButton: GameButton) {
     this.playerSequence.push(gameButton);
@@ -82,11 +87,12 @@ class GameController {
     }
 
     if(!isEqual) {
-      alert("Wrong button, you lost :(");
       this.gameSequence = [];
       this.playerSequence = [];
-      this.addGameSequence();
-      return;      
+      this.rounds = 0;
+      this.$roundsNumber.innerHTML = this.rounds.toString();
+      this.openModal();
+      return;
     }
 
     var roundNotFinished = this.playerSequence.length < this.gameSequence.length;
@@ -95,12 +101,34 @@ class GameController {
       console.log("NotFinished");
       return;
     }
+    
+    this.rounds++;
+    this.$roundsNumber.innerHTML = this.rounds.toString();
 
     this.playerSequence = [];
     this.addGameSequence();
     
     console.log("Finished");
     
+  }
+
+  openModal() {
+    let $modalLose = document.querySelector(".modal-lose");
+    let $overlayModal = document.querySelector(".overlay-modal");
+    $modalLose.style.display = "block";
+    $overlayModal.style.display = "block";
+  }
+
+  closeModal() {
+    let $modalLose = document.querySelector(".modal-lose");
+    let $overlayModal = document.querySelector(".overlay-modal");
+    $modalLose.style.display = "none";
+    $overlayModal.style.display = "none";  
+  }
+
+  playAgain() {
+    this.closeModal();
+    this.addGameSequence();
   }
 
   getRandomButton() {
@@ -112,7 +140,6 @@ class GameController {
 
     this.playGameSequence();
 
-    
     console.log(this.gameSequence);
   }
 
@@ -123,15 +150,6 @@ class GameController {
       }, (BUTTON_ACTIVATION_DELAY * key) + 2000);
     })
   }
-
-  // Responsibility:
-  // - Random buttom
-  // - Add random buttom to gameSequence
-  // - Get playerButton
-  // - Add playerButtom to playerSequence
-  // - Compare gameSquence == playerSequence
-  // - Set loseScreen = true
-  // - Call Rounds
 }
 
 class Rounds {

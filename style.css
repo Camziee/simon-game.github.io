@@ -10,7 +10,7 @@ body, html {
 
 /* Body Wrapper */
 .body-wrapper {
-    display: flex; /*position*/
+    display: flex; 
     flex-direction: column;
 }
 
@@ -18,12 +18,12 @@ body, html {
 
 /* Header */
 .bar-header {
-    flex-basis: 100px; /*position*/
+    flex-basis: 100px; 
 
-    background-color: rgb(36, 36, 36); /*style*/
+    background-color: rgb(36, 36, 36); 
 }
 .bar-header__title {
-    text-align: center; /* position */
+    text-align: center; 
     margin-top: 4px;
     transform: translateY(50%);
 
@@ -34,26 +34,64 @@ body, html {
 
 
 
+
 /* Main */
 .main-wrapper {
-    display: flex; /*position*/
+    display: flex; 
     flex-direction: row;
     flex: 1;
 
-    background-color: rgb(226, 226, 226); /*style*/
+    background-color: rgb(226, 226, 226); 
 }
 
+.rounds {
+    display: flex;
+    flex: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: lightgray;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    width: 30%;
+    height: 10%;
+}
+
+@media (min-width: 400px) {
+    .rounds {width: 25%;}
+}
+
+@media (min-width: 500px) {
+    .rounds {width: 20%;}
+}
+
+@media (min-width: 600px) {
+    .rounds {width: 15%;}
+}
+
+@media (min-width: 700px) {
+    .rounds {width: 15%;}
+}
+
+.rounds-title {
+    font-size: 22px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.rounds-number {
+    font-size: 22px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
 
 /* Game Wraper */
 .game-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex: 1; /* position */
+    flex: 1; 
  
-    background-color: rgb(70, 70, 70); /*style*/
+    background-color: rgb(70, 70, 70); 
 }
 
 /* Button Wrapper */
@@ -94,13 +132,13 @@ body, html {
     transform: scale(0.9);
 }
 .game-button_pink {
-    background-color: rgb(255, 174, 201); /*style*/
+    background-color: rgb(255, 174, 201); 
 }
 .game-button_blue {
-    background-color: rgb(153, 217, 234); /*style*/
+    background-color: rgb(153, 217, 234); 
 }
 .game-button_yellow {
-    background-color: rgb(255, 255, 128); /*style*/
+    background-color: rgb(255, 255, 128); 
 }
 .game-button_green {
     background-color: rgb(128, 255, 128);
@@ -109,20 +147,91 @@ body, html {
 .game-button--activated {
     transform: scale(1.1);
 }
-/* combinar as classes classe.classe, especifico para cada cor */
 
 
+.modal-lose {
+    overflow: hidden;
+    display: none;
+    position: absolute;
+    border-radius: 15px;
+    background-color: lightgray;
+    margin: auto;
+    top: 20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 80%;
+    height: 65%;
+}
+
+.modal-lose_title {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.modal-lose_text {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.btn_play-again:hover {
+    background-color: rgb(34, 34, 34);
+}
+
+.btn_play-again:active {
+    background-color: rgb(28, 28, 28);
+}
+
+.btn_play-again {
+    cursor: pointer;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    background-color: rgb(28, 28, 28);
+    color: lightgray;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 15px;
+    width: 56%;
+    height: 20%;
+}
+@media (max-width: 365px) {
+    .btn_play-again {font-size: 25px;}
+    .modal-lose_text {font-size: 25px;}
+    .modal-lose_title {font-size: 40px;}
+}
+
+.overlay-modal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 55%;
+
+}
 
 /* Footer */
 .bar-footer {
     text-align: center;
-    flex-basis: 60px; /*position*/
+    flex-basis: 60px; 
 
-    background-color: rgb(36, 36, 36); /*style*/
+    background-color: rgb(36, 36, 36); 
 }
 .bar-footer__title {
     margin-top: 25px;
-    font-size: 12px; /* style */
+    font-size: 12px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: white;
 }

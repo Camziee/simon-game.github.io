@@ -1,4 +1,3 @@
-var WINNING_ROUND = 10;
 var BUTTON_ACTIVATION_DELAY = 700;
 var GameApp = /** @class */ (function () {
     function GameApp() {
@@ -38,6 +37,10 @@ var GameController = /** @class */ (function () {
         this.gameSequence = [];
         this.playerSequence = [];
         this.colors = ["pink", "blue", "yellow", "green"];
+        this.rounds = 0;
+        this.$roundsNumber = document.querySelector(".rounds-number");
+        this.$modalPlayAgain = document.querySelector(".btn_play-again");
+        this.$modalPlayAgain.onclick = this.playAgain.bind(this);
         for (var _i = 0, _a = this.colors; _i < _a.length; _i++) {
             var color = _a[_i];
             var currentColor = new GameButton(color, this.playerClickedGameButton.bind(this));
@@ -56,10 +59,11 @@ var GameController = /** @class */ (function () {
             }
         }
         if (!isEqual) {
-            alert("Wrong button, you lost :(");
             this.gameSequence = [];
             this.playerSequence = [];
-            this.addGameSequence();
+            this.rounds = 0;
+            this.$roundsNumber.innerHTML = this.rounds.toString();
+            this.openModal();
             return;
         }
         var roundNotFinished = this.playerSequence.length < this.gameSequence.length;
@@ -67,9 +71,27 @@ var GameController = /** @class */ (function () {
             console.log("NotFinished");
             return;
         }
+        this.rounds++;
+        this.$roundsNumber.innerHTML = this.rounds.toString();
         this.playerSequence = [];
         this.addGameSequence();
         console.log("Finished");
+    };
+    GameController.prototype.openModal = function () {
+        var $modalLose = document.querySelector(".modal-lose");
+        var $overlayModal = document.querySelector(".overlay-modal");
+        $modalLose.style.display = "block";
+        $overlayModal.style.display = "block";
+    };
+    GameController.prototype.closeModal = function () {
+        var $modalLose = document.querySelector(".modal-lose");
+        var $overlayModal = document.querySelector(".overlay-modal");
+        $modalLose.style.display = "none";
+        $overlayModal.style.display = "none";
+    };
+    GameController.prototype.playAgain = function () {
+        this.closeModal();
+        this.addGameSequence();
     };
     GameController.prototype.getRandomButton = function () {
         return this.gameButtons[Math.floor(Math.random() * this.gameButtons.length)];
