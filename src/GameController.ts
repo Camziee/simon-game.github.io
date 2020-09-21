@@ -80,8 +80,8 @@ export default class GameController {
     }
   
     closeModal() {
-      let $modalLose = document.querySelector(".modal-lose"); //declarar lá em cima para n pegar toda hora o querySelector (usar o this. pq vira um parametro da classe)
-      let $overlayModal = document.querySelector(".overlay-modal");
+      let $modalLose: HTMLElement = document.querySelector(".modal-lose"); //declarar lá em cima para n pegar toda hora o querySelector (usar o this. pq vira um parametro da classe)
+      let $overlayModal: HTMLElement = document.querySelector(".overlay-modal");
       $modalLose.style.display = "none";
       $overlayModal.style.display = "none";  
     }
