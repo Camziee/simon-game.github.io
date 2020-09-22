@@ -46,6 +46,8 @@ define("GameController", ["require", "exports", "GameButton", "config"], functio
             this.playerSequence = [];
             this.colors = ["pink", "blue", "yellow", "green"];
             this.rounds = 0;
+            this.$modalLose = document.querySelector(".modal-lose");
+            this.$overlayModal = document.querySelector(".overlay-modal");
             this.$roundsNumber = document.querySelector(".rounds-number");
             this.$buttonPlayAgain = document.querySelector(".btn_play-again");
             this.$buttonPlayAgain.onclick = this.playAgain.bind(this);
@@ -76,26 +78,20 @@ define("GameController", ["require", "exports", "GameButton", "config"], functio
             }
             var roundNotFinished = this.playerSequence.length < this.gameSequence.length;
             if (roundNotFinished) {
-                console.log("NotFinished");
                 return;
             }
             this.rounds++;
             this.$roundsNumber.innerHTML = this.rounds.toString();
             this.playerSequence = [];
             this.addGameSequence();
-            console.log("Finished");
         };
         GameController.prototype.openModal = function () {
-            var $modalLose = document.querySelector(".modal-lose"); //declarar lá em cima para n pegar toda hora o querySelector (usar o this. pq vira um parametro da classe)
-            var $overlayModal = document.querySelector(".overlay-modal"); // pesquisar 3 tipos de element do querySelector
-            $modalLose.style.display = "block";
-            $overlayModal.style.display = "block";
+            this.$modalLose.style.display = "block";
+            this.$overlayModal.style.display = "block";
         };
         GameController.prototype.closeModal = function () {
-            var $modalLose = document.querySelector(".modal-lose"); //declarar lá em cima para n pegar toda hora o querySelector (usar o this. pq vira um parametro da classe)
-            var $overlayModal = document.querySelector(".overlay-modal");
-            $modalLose.style.display = "none";
-            $overlayModal.style.display = "none";
+            this.$modalLose.style.display = "none";
+            this.$overlayModal.style.display = "none";
         };
         GameController.prototype.playAgain = function () {
             this.closeModal();
