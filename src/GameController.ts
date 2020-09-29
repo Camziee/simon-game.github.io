@@ -1,5 +1,9 @@
 import GameButton from './GameButton';
-import {BUTTON_ACTIVATION_DELAY} from './config';
+import {
+  BUTTON_ACTIVATION_DELAY,
+  BUTTON_START_ANIMATION_DELAY,
+  BUTTON_ANIMATION_DELAY
+} from './config';
 
 export default class GameController {
     gameRunning: boolean = false;
@@ -105,7 +109,7 @@ export default class GameController {
       this.gameSequence.forEach(function (gameButton, key) {
         setTimeout(() => {
           gameButton.turnOnThenOff();
-        }, (BUTTON_ACTIVATION_DELAY * key) + 2000);
+        }, ((BUTTON_ACTIVATION_DELAY + BUTTON_ANIMATION_DELAY) * key) + BUTTON_START_ANIMATION_DELAY);
       })
     }
   }
